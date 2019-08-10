@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  font-size: 1.125rem;
+  color: #fff;
+  background-color: #000;
+}
+
+p {
+  margin-top: 10px;
+}
+
+select {
+  display: block;
+  height: 30px;
+  margin: 10px 0;
+}
+
+main {
+  margin-top: 15px;
+  padding: 0 20px;
+}
+
+@include media-breakpoint-up(sm) {
+  select {
+    display: inline-block;
+  }
+
+  main {
+    margin-top: 20px;
+    padding: 0 10px;
+  }
+
+  main,
+  header {
+    margin-left: 20px;
+  }
+}

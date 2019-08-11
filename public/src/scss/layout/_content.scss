@@ -3,6 +3,15 @@
   margin: 0 auto;
 }
 
+.fade {
+  transition: all 1s ease-in-out;
+}
+
+.hide {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
 @include media-breakpoint-up(sm) {
   .outer-wrapper {
     width: 75%;

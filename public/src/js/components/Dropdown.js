@@ -53,6 +53,14 @@ class Dropdown extends Component {
     })
   };
 
+  componentDidMount() {
+    window.addEventListener('click', () => {
+      [...document.querySelectorAll('.open')].forEach(menu => {
+        menu.classList.remove('open');
+      });
+    });
+  }
+
   render() {
     const options = this.props.options;
     const menuOptions = options.length ? (

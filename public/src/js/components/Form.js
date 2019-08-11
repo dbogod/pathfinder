@@ -233,7 +233,7 @@ class Form extends Component {
     const origin = this.state.dest;
     const dest = this.state.origin;
 
-    if (this.state.origin.value !== '' || this.state.dest.value !== '') {
+    if (this.state.origin.value !== '' && this.state.dest.value !== '') {
       this.setState({
         origin: origin,
         dest: dest
@@ -262,8 +262,16 @@ class Form extends Component {
           <div className="pathfinder__form-options fade hide">
             <div className="pathfinder__form-options-selects">
 
-              <Dropdown handleSelect={this.handleSelect} value={this.state.origin.name} options={this.state.locations} containerClasses="pathfinder__form-select pathfinder__form-select--start" listClasses="pathfinder__form-select-list" titleClasses="pathfinder__form-select-title"/>
-              <Dropdown handleSelect={this.handleSelect} value={this.state.dest.name} options={this.state.locations} containerClasses="pathfinder__form-select pathfinder__form-select--finish" listClasses="pathfinder__form-select-list" titleClasses="pathfinder__form-select-title"/>
+              <Dropdown handleSelect={this.handleSelect} value={this.state.origin.name}
+                        options={this.state.locations.filter(location => {
+                          return location.value !== this.state.dest.value;
+                        })}
+                        containerClasses="pathfinder__form-select pathfinder__form-select--start" listClasses="pathfinder__form-select-list" titleClasses="pathfinder__form-select-title"/>
+              <Dropdown handleSelect={this.handleSelect} value={this.state.dest.name}
+                        options={this.state.locations.filter(location => {
+                          return location.value !== this.state.origin.value;
+                        })}
+                        containerClasses="pathfinder__form-select pathfinder__form-select--finish" listClasses="pathfinder__form-select-list" titleClasses="pathfinder__form-select-title"/>
 
             </div>
             <div className="pathfinder__form-options-switch-container">

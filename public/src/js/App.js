@@ -3,11 +3,6 @@ import React from 'react';
 import Form from './components/Form';
 
 const App = () => {
-  window.addEventListener('click', () => {
-    [...document.querySelectorAll('.open')].forEach(menu => {
-      menu.classList.remove('open');
-    });
-  });
   return (
     <div className="outer-wrapper">
       <header>

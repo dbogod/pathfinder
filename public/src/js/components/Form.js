@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import Dropdown from './Dropdown';
 import ArrowsIcon from '../icons/Arrows';
@@ -25,14 +24,14 @@ class Form extends Component {
         path: ''
       },
       locations: [
-        {value: 'A', displayString: 'The Arbor'},
-        {value: 'B', displayString: 'Braavos'},
-        {value: 'C', displayString: 'Casterly Rock'},
-        {value: 'D', displayString: 'Dorne'},
-        {value: 'E', displayString: 'The Eyrie'},
-        {value: 'F', displayString: 'The Fist of the First Men'},
-        {value: 'G', displayString: 'The Gift'},
-        {value: 'H', displayString: 'Harrenhal'}
+        { value: 'A', displayString: 'The Arbor' },
+        { value: 'B', displayString: 'Braavos' },
+        { value: 'C', displayString: 'Casterly Rock' },
+        { value: 'D', displayString: 'Dorne' },
+        { value: 'E', displayString: 'The Eyrie' },
+        { value: 'F', displayString: 'The Fist of the First Men' },
+        { value: 'G', displayString: 'The Gift' },
+        { value: 'H', displayString: 'Harrenhal' }
       ]
     };
 
@@ -51,13 +50,13 @@ class Form extends Component {
     const graph = (() => {
 
       const data = {
-        'A': {C: 2},
-        'B': {D: 4, E: 7},
-        'C': {D: 1, F: 4},
-        'D': {B: 4, F: 1, G: 2},
-        'E': {B: 7, H: 10},
-        'F': {D: 1, G: 3},
-        'G': {H: 4},
+        'A': { C: 2 },
+        'B': { D: 4, E: 7 },
+        'C': { D: 1, F: 4 },
+        'D': { B: 4, F: 1, G: 2 },
+        'E': { B: 7, H: 10 },
+        'F': { D: 1, G: 3 },
+        'G': { H: 4 },
         'H': {}
       };
 
@@ -104,10 +103,10 @@ class Form extends Component {
     };
 
     // Object to keep track of the shortest distance to reach each point from 'start'
-    const shortestDistance = Object.assign({finish: Infinity}, graph.start);
+    const shortestDistance = Object.assign({ finish: Infinity }, graph.start);
 
     // Object to keep track of nearest parent to each point
-    const parents = {finish: null};
+    const parents = { finish: null };
     for (const child in graph.start) {
       parents[child] = 'start';
     }
@@ -185,11 +184,11 @@ class Form extends Component {
 
     if (e.target.closest('div').classList.contains('pathfinder__form-select--start')) {
       this.setState({
-        origin: {value: e.target.dataset.value, name: e.target.dataset.name}
+        origin: { value: e.target.dataset.value, name: e.target.dataset.name }
       })
     } else if (e.target.closest('div').classList.contains('pathfinder__form-select--finish')) {
       this.setState({
-        dest: {value: e.target.dataset.value, name: e.target.dataset.name}
+        dest: { value: e.target.dataset.value, name: e.target.dataset.name }
       })
     }
 
@@ -258,15 +257,15 @@ class Form extends Component {
             <div className="pathfinder__form-options-selects">
 
               <Dropdown handleSelect={this.handleSelect} value={this.state.origin.name}
-                        options={this.state.locations.filter(location => {
-                          return location.value !== this.state.dest.value;
-                        })}
-                        containerClasses="pathfinder__form-select pathfinder__form-select--start" listClasses="pathfinder__form-select-list" titleClasses="pathfinder__form-select-title"/>
+                options={this.state.locations.filter(location => {
+                  return location.value !== this.state.dest.value;
+                })}
+                containerClasses="pathfinder__form-select pathfinder__form-select--start" listClasses="pathfinder__form-select-list" titleClasses="pathfinder__form-select-title"/>
               <Dropdown handleSelect={this.handleSelect} value={this.state.dest.name}
-                        options={this.state.locations.filter(location => {
-                          return location.value !== this.state.origin.value;
-                        })}
-                        containerClasses="pathfinder__form-select pathfinder__form-select--finish" listClasses="pathfinder__form-select-list" titleClasses="pathfinder__form-select-title"/>
+                options={this.state.locations.filter(location => {
+                  return location.value !== this.state.origin.value;
+                })}
+                containerClasses="pathfinder__form-select pathfinder__form-select--finish" listClasses="pathfinder__form-select-list" titleClasses="pathfinder__form-select-title"/>
 
             </div>
             <div className="pathfinder__form-options-switch-container">

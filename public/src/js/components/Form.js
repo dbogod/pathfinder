@@ -10,7 +10,6 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMatchError: false,
       isSelectError: false,
       isResult: false,
       origin: {
@@ -91,65 +90,67 @@ class Form extends Component {
       return data;
     })();
 
-    const lowestCostNode = (costs, processed) => {
-      return Object.keys(costs).reduce((lowest, node) => {
-        if (lowest === null || costs[node] < costs[lowest]) {
-          if (!processed.includes(node)) {
-            lowest = node;
+    // Return nearest point
+    const nearestPoint = (shortestDistances, processed) => {
+      return Object.keys(shortestDistances).reduce((nearest, point) => {
+        if (nearest === null || shortestDistances[point] < shortestDistances[nearest]) {
+          // Ignore if point has already been processed
+          if (!processed.includes(point)) {
+            nearest = point;
           }
         }
-        return lowest;
+        return nearest;
       }, null);
     };
 
-    // track lowest cost to reach each node
-    const costs = Object.assign({finish: Infinity}, graph.start);
+    // Object to keep track of the shortest distance to reach each point from 'start'
+    const shortestDistance = Object.assign({finish: Infinity}, graph.start);
 
-    // track paths
+    // Object to keep track of nearest parent to each point
     const parents = {finish: null};
     for (const child in graph.start) {
       parents[child] = 'start';
     }
 
-    // track nodes that have already been processed
+    // Array of points which have been processed
     const processed = [];
 
-    let node = lowestCostNode(costs, processed);
+    let point = nearestPoint(shortestDistance, processed);
 
-    while (node) {
-      const cost = costs[node];
-      const children = graph[node];
-      for (const n in children) {
-        if (n !== 'start') {
-          const newCost = cost + children[n];
-          if (!costs[n]) {
-            costs[n] = newCost;
-            parents[n] = node;
-          }
-          if (costs[n] > newCost) {
-            costs[n] = newCost;
-            parents[n] = node;
+    // Loop through the points
+    while (point) {
+      const distance = shortestDistance[point];
+      const children = graph[point];
+      for (const child in children) {
+        if (child !== 'start') {
+          const newDistance = distance + children[child];
+          if (!shortestDistance[child] || shortestDistance[child] > newDistance) {
+            shortestDistance[child] = newDistance;
+            parents[child] = point;
           }
         }
       }
-      processed.push(node);
-      node = lowestCostNode(costs, processed);
+      processed.push(point);
+      point = nearestPoint(shortestDistance, processed);
     }
 
-    const optimalPath = ['finish'];
+    // Build shortest path array by going backwards through shortest path and adding each parent to the array until there parent is null (ie. 'start')
+    const shortestPath = ['finish'];
     let parent = parents.finish;
     while (parent) {
-      optimalPath.unshift(parent);
+      shortestPath.unshift(parent);
       parent = parents[parent];
     }
 
+    // Reverse path array if values were not in alphabetical order
     if (!isFwd) {
-      optimalPath.reverse();
+      shortestPath.reverse();
     }
 
+    // Object containing distance (num) and shortest path (array)
     const result = {
-      distance: costs.finish,
-      path: optimalPath
+      distance: shortestDistance.finish,
+      path: shortestPath
     };
 
     result.path[0] = isFwd ? origin : dest;
@@ -163,7 +164,6 @@ class Form extends Component {
   handleReset = () => {
     this.setState({
       isSelectError: false,
-      isMatchError: false,
       isResult: false,
       origin: {
         value: '',
@@ -203,7 +203,6 @@ class Form extends Component {
 
     this.setState({
       isSelectError: false,
-      isMatchError: false,
       isResult: false,
       result: {
         distance: '',
@@ -211,11 +210,7 @@ class Form extends Component {
       }
     });
 
-    if (origin === dest) {
-      this.setState({
-        isMatchError: true
-      })
-    } else if (origin === '' || dest === '') {
+    if (origin === '' || dest === '') {
       this.setState({
         isSelectError: true
       })
@@ -253,7 +248,7 @@ class Form extends Component {
 
   render() {
     const distance = this.state.result.distance > 0 ? this.state.result.distance.toString() : '';
-    const path = this.state.result.path.length > 0 ? this.state.result.path.join(' > ') : '';
+    const path = this.state.result.path.length ? this.state.result.path.join(' > ') : '';
 
     return (
       <div className="pathfinder__form-container">
@@ -285,7 +280,7 @@ class Form extends Component {
             <button className="pathfinder__form-button pathfinder__form-button--clear" type="reset">Reset</button>
           </div>
         </form>
-        <Errors isSelectError={this.state.isSelectError} isMatchError={this.state.isMatchError}/>
+        <Errors isSelectError={this.state.isSelectError} />
         <Result isResult={this.state.isResult} distance={distance} path={path}/>
       </div>
     )

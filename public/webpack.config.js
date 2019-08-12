@@ -86,9 +86,9 @@ module.exports = (env, argv) => {
     plugins: [
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
-        title: 'Daniel\'s Site',
+        title: 'Pathfinder',
         template: './src/index.html',
-        filename: "./index.html"
+        filename: './index.html'
       }),
       new CopyWebpackPlugin([{
         from: './src/assets',

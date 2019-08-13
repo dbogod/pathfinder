@@ -94,6 +94,10 @@ module.exports = (env, argv) => {
         from: './src/assets',
         to: 'assets'
       }]),
+      new CopyWebpackPlugin([{
+        from: './favicon.ico',
+        to: 'assets/favicon'
+      }]),
       new MiniCssExtractPlugin({
         filename: 'css/style.[contenthash].css'
       }),

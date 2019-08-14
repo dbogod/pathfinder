@@ -187,12 +187,20 @@ class Form extends Component {
     if (e.target.closest('div').classList.contains('pathfinder__form-select--start')) {
       this.setState({
         origin: { value: e.target.dataset.value, name: e.target.dataset.name }
-      })
+      });
     } else if (e.target.closest('div').classList.contains('pathfinder__form-select--finish')) {
       this.setState({
         dest: { value: e.target.dataset.value, name: e.target.dataset.name }
       })
     }
+
+    setTimeout(() => {
+      if (this.state.origin.value !== '' && this.state.dest.value !== '') {
+        this.setState({
+          isSelectError: false
+        })
+      }
+    }, 100);
   };
 
   handleSubmit = e => {

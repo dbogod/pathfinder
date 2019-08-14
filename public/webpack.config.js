@@ -4,6 +4,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+
 
 module.exports = (env, argv) => {
   return {
@@ -84,6 +86,7 @@ module.exports = (env, argv) => {
       historyApiFallback: true,
     },
     plugins: [
+      new Dotenv(),
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         title: 'Pathfinder',

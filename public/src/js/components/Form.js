@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { Component } from 'react';
 
 import Dropdown from './Dropdown';
@@ -181,6 +182,7 @@ class Form extends Component {
 
   handleSelect = e => {
     e.stopPropagation();
+    e.target.closest('div').classList.remove('open');
 
     if (e.target.closest('div').classList.contains('pathfinder__form-select--start')) {
       this.setState({
@@ -191,8 +193,6 @@ class Form extends Component {
         dest: { value: e.target.dataset.value, name: e.target.dataset.name }
       })
     }
-
-    e.target.closest('div').classList.remove('open');
   };
 
   handleSubmit = e => {

@@ -3,6 +3,16 @@
   margin: 0 auto;
 }
 
+.kb-focus {
+  & *:focus {
+    outline: 3px solid #ffa500;
+  }
+
+  button:focus {
+    outline: 3px solid #ffa500;
+  }
+}
+
 .fade {
   transition: all 1s ease-in-out;
 }

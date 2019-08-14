@@ -1,5 +1,4 @@
 import React from 'react';
-
 const Chevron = () => {
   return (
     <svg version="1.1" className='icon--chevron' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 407.437 407.437">

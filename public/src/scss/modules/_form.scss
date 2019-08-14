@@ -3,6 +3,7 @@
   border-top: 10px solid #2baa7f;
   margin-bottom: 0;
   padding: 20px 20px 0;
+  font-family: "Abril Fatface", serif;
   font-size: 3rem;
   font-weight: 500;
 }
@@ -14,13 +15,16 @@
   max-width: 300px;
   border-bottom: 1px solid #fff;
   margin: 20px 0;
-  padding: 0;
+  padding: 5px 10px;
+  background: #303030;
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
 
   .icon--chevron {
     fill: #fff;
     height: 15px;
     margin-top: 5px;
+    transition: all 0.3s ease-in-out;
   }
 
   &:hover {
@@ -32,16 +36,15 @@
     }
   }
 
-  &.open {
-    .icon--chevron {
-      transform: rotate(180deg);
-    }
+  &.open .icon--chevron {
+    transform: rotate(180deg);
   }
 }
 
 .pathfinder__form-select-list {
   position: absolute;
-  top: 27px;
+  top: 37px;
+  left: 0;
   overflow: hidden;
   width: 100%;
   max-height: 0;
@@ -60,6 +63,7 @@
 
   li {
     padding: 0 5px;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
       background-color: #d3d3d3;

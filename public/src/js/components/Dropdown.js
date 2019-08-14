@@ -34,16 +34,36 @@ class Dropdown extends Component {
   };
 
   kbActions = e => {
-    e.preventDefault();
     if (e.target.tagName === 'DIV') {
       if (e.key === 'Enter') {
         this.toggleMenu(e);
+      } else if (e.key === 'ArrowDown') {
+        if (e.target.querySelector('ul').firstChild) {
+          e.target.querySelector('ul').firstChild.focus();
+        }
       }
     } else if (e.target.tagName === 'LI') {
       if (e.key === 'Enter') {
         this.props.handleSelect(e);
         this.menuState(false);
+      } else if (e.key === 'ArrowDown') {
+        if (e.target.nextElementSibling) {
+          e.target.nextElementSibling.focus();
+        } else {
+          e.target.parentNode.firstChild.focus();
+        }
+      } else if (e.key === 'ArrowUp') {
+        if (e.target.previousElementSibling) {
+          e.target.previousElementSibling.focus()
+        } else {
+          e.target.parentNode.lastChild.focus();
+        }
       }
+    }
+
+    if (e.key === 'Escape') {
+      e.target.closest('div').classList.remove('open');
+      this.menuState(false);
     }
   };
 
@@ -66,7 +86,7 @@ class Dropdown extends Component {
     const menuOptions = options.length ? (
       options.map((option, i) => {
         return (
-          <li data-value={option.value} data-name={option.displayString} key={i} onClick={e => {this.menuState(false); this.props.handleSelect(e)}}  tabIndex={this.state.menuIsOpen ? '0' : ''}>{option.displayString}</li>
+          <li data-value={option.value} data-name={option.displayString} key={i} onClick={e => {this.props.handleSelect(e); this.menuState(false)}}  tabIndex={this.state.menuIsOpen ? '0' : ''}>{option.displayString}</li>
         )
       })
     ) : null;
@@ -74,7 +94,7 @@ class Dropdown extends Component {
     return (
       <div onClick={this.toggleMenu} onKeyUp={this.kbActions} className={this.props.containerClasses} tabIndex="0">
         <span className={this.props.titleClasses}>{this.props.value}</span>
-        <ChevronIcon />
+        <ChevronIcon toggleMenu={this.toggleMenu} />
         <ul className={this.props.listClasses}>
           {menuOptions}
         </ul>

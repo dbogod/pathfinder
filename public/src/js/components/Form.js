@@ -283,7 +283,7 @@ class Form extends Component {
             </div>
           </div>
           <div className="pathfinder__form-button-container fade hide">
-            <button className="pathfinder__form-button pathfinder__form-button--submit" type="submit">Submit</button>
+            <button className="pathfinder__form-button pathfinder__form-button--submit" data-component="submitBtn" type="submit">Submit</button>
             <button className="pathfinder__form-button pathfinder__form-button--clear" type="reset">Reset</button>
           </div>
         </form>
